@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "926298181026",
+    "project_id": "loja-virtual-2fb14",
+    "storage_bucket": "loja-virtual-2fb14.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926298181026:android:b090fc8f3496d259f2f6fb",
+        "android_client_info": {
+          "package_name": "br.com.moschenmurilo.loja_virtual_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1tic8trpqUvVyU8Y9d9usVpAo411hI3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

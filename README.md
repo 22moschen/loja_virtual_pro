@@ -99,8 +99,8 @@ class ProductRepository {
 MIT License - Consulte o arquivo LICENSE para detalhes.
 
 Desenvolvido com ❤️ por [Murilo Oliveira Moschen]
-LinkedIn
-Portfólio
+LinkedIn - https://shre.ink/LinkedinComMuriloMoschen
+
 
 🔍 Open for Opportunities: Atualmente buscando desafios como Flutter Tech Lead em projetos inovadores.
 

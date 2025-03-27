@@ -14,7 +14,12 @@ class MyApp extends StatelessWidget {
       title: 'Moschen Tecnologia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: const Color.fromARGB(255, 4, 125, 141),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 4, 125, 144),
+          elevation: 0
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BaseScreen(), // Adicione const se BaseScreen for imutável

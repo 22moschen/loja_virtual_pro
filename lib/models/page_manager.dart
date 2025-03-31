@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class PageManager {
   PageManager(this._pageController);
 
-  PageController _pageController;
+  final PageController _pageController;
   
 
   int page = 0;

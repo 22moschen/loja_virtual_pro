@@ -1,15 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:loja_virtual_pro/screens/base/base_screen.dart';
+import 'package:loja_virtual_pro/screens/signup/signup_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -33,7 +33,16 @@ class MyApp extends StatelessWidget {
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: BaseScreen(), // Adicione const se BaseScreen for imutável
+        initialRoute: '/base',
+        onGenerateRoute: (settings) {
+          switch(settings.name) {
+            case '/signup':
+              return MaterialPageRoute(builder: (_) => SingnUpScreen());
+            case '/base':
+            default:
+              return MaterialPageRoute(builder: (_) => BaseScreen());
+          }
+        },
       ),
     );
   }

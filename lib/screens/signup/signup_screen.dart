@@ -13,6 +13,7 @@ class SingnUpScreen extends StatelessWidget {
     email: 'email',
     password: 'pass',
     confirmPassword: 'confirmPassword',
+    id: 'id'
   );
 
   SingnUpScreen({super.key});

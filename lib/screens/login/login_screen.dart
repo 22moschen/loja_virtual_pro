@@ -96,7 +96,8 @@ class LoginScreen extends StatelessWidget {
                                     userManager.signIn(
                                       user: app_user.User(
                                         email: emailController.text,
-                                        password: passwordController.text, name: ' ', confirmPassword: ' ',
+                                        password: passwordController.text, name: 'name', confirmPassword: 'confirmPassword',
+                                        id: 'id'
                                       ),
                                       onFail: (e) {
                                         ScaffoldMessenger.of(

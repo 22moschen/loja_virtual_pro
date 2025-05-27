@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:loja_virtual_pro/screens/base/base_screen.dart';

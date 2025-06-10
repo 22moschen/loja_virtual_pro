@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           switch(settings.name) {
             case '/signup':
-              return MaterialPageRoute(builder: (_) => SingnUpScreen());
+              return MaterialPageRoute(builder: (_) => SignUpScreen());
             case '/base':
             default:
               return MaterialPageRoute(builder: (_) => BaseScreen());

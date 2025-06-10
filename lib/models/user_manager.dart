@@ -33,8 +33,8 @@ class UserManager extends ChangeNotifier {
         password: user.password,
       );
 
-      this.user = user;
-      print('Usuário logado: ${user.name}');
+      await _loadCurrentUser(result.user);
+      print('Usuário logado: ${this.user?.name}');
       onSuccess(result.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       onFail(getErrorString(e.code));
@@ -42,7 +42,7 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
-  Future<void> sigunUp({
+  Future<void> signUp({
     required app_user.User user,
     required Function(String) onFail,
     required Function() onSuccess,
@@ -58,7 +58,9 @@ class UserManager extends ChangeNotifier {
 
       await user.saveData();
 
-      print('Usuário cadastrado: ${user.name}');
+      await _loadCurrentUser(result.user);
+
+      print('Usuário cadastrado: ${this.user?.name}');
       onSuccess();
     } on firebase_auth.FirebaseAuthException catch (e) {
       onFail(getErrorString(e.code));
@@ -74,9 +76,19 @@ class UserManager extends ChangeNotifier {
   Future<void> _loadCurrentUser(firebase_auth.User? firebaseUser) async {
     final firebase_auth.User? currentUser = firebaseUser ?? auth.currentUser;
     if (currentUser != null) {
-      final DocumentSnapshot docUser = await firestore.collection('users').doc(currentUser.uid).get();
-      user = app_user.User.fromDocument(docUser);
-      print('Usuário carregado: ${user?.name}');
+      try {
+        final DocumentSnapshot docUser = await firestore.collection('users').doc(currentUser.uid).get();
+        if (docUser.exists) {
+          user = app_user.User.fromDocument(docUser);
+          print('Usuário carregado: ${user?.name}');
+        } else {
+          user = null;
+          print('Documento do usuário não encontrado no Firestore.');
+        }
+      } catch (e) {
+        user = null;
+        print('Erro ao carregar usuário: $e');
+      }
       notifyListeners();
     }
   }

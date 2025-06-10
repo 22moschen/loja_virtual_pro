@@ -103,7 +103,7 @@ void main() {
       var onSuccessCalled = false;
       var onFailCalled = false;
 
-      await userManager.sigunUp(
+      await userManager.signUp(
         user: user,
         onFail: (msg) => onFailCalled = true,
         onSuccess: () => onSuccessCalled = true,
@@ -128,7 +128,7 @@ void main() {
       var onSuccessCalled = false;
       var onFailCalled = false;
 
-      await userManager.sigunUp(
+      await userManager.signUp(
         user: user,
         onFail: (msg) => onFailCalled = true,
         onSuccess: () => onSuccessCalled = true,

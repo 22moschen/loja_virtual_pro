@@ -4,7 +4,7 @@ import 'package:loja_virtual_pro/models/user.dart';
 import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
-class SingnUpScreen extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -16,7 +16,7 @@ class SingnUpScreen extends StatelessWidget {
     id: 'id'
   );
 
-  SingnUpScreen({super.key});
+  SignUpScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,11 +115,11 @@ class SingnUpScreen extends StatelessWidget {
                         
                       }
                       // usermanager
-                      context.read<UserManager>().sigunUp(
+                      context.read<UserManager>().signUp(
                         user: user,
                         onSuccess: () {
                           debugPrint('Sucesso');
-                          // TODO: pop
+                          Navigator.of(context).pop();
                         },
                         onFail: (e) {
                           ScaffoldMessenger.of(context).showSnackBar(

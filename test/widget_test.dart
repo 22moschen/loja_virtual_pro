@@ -4,6 +4,7 @@ import 'package:loja_virtual_pro/screens/base/base_screen.dart';
 import 'package:loja_virtual_pro/common/custom_drawer/custom_drawer.dart';
 import 'package:loja_virtual_pro/common/custom_drawer/custom_drawer_header.dart';
 import 'package:loja_virtual_pro/models/user_manager.dart';
+import 'package:loja_virtual_pro/models/user.dart' as app_user;
 import 'package:provider/provider.dart';
 
 void main() {
@@ -63,6 +64,30 @@ void main() {
       // Since user is null, userName should be empty
       expect(find.textContaining('Bom dia'), findsOneWidget); // Greeting depends on current time
       expect(find.textContaining(','), findsOneWidget); // Greeting with comma and empty user name
+    });
+
+    testWidgets('CustomDrawerHeader shows user name when user is not null', (WidgetTester tester) async {
+      final userManager = UserManager();
+      userManager.user = app_user.User(
+        id: '1',
+        name: 'Test User',
+        email: 'test@example.com',
+        password: '',
+        confirmPassword: '',
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: ChangeNotifierProvider<UserManager>.value(
+            value: userManager,
+            child: const Scaffold(
+              body: CustomDrawerHeader(),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.textContaining('Test User'), findsOneWidget);
     });
   });
 }

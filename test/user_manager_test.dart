@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:loja_virtual_pro/models/user.dart' as app_user;
-
+import 'package:firebase_core/firebase_core.dart';
 import 'user_manager_test.mocks.dart';
 
 @GenerateMocks([
@@ -18,13 +18,23 @@ import 'user_manager_test.mocks.dart';
   DocumentSnapshot,
 ])
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late UserManager userManager;
   late MockFirebaseAuth mockAuth;
   late MockFirebaseFirestore mockFirestore;
 
+  setUpAll(() async {
+    await Firebase.initializeApp();
+  });
+
   setUp(() {
     mockAuth = MockFirebaseAuth();
     mockFirestore = MockFirebaseFirestore();
+
+    // Stub para currentUser
+    when(mockAuth.currentUser).thenReturn(MockUser());
+
     userManager = UserManager(auth: mockAuth, firestore: mockFirestore);
   });
 

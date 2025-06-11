@@ -5,6 +5,7 @@ import 'package:loja_virtual_pro/models/user.dart' as app_user;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserManager extends ChangeNotifier {
+  
   final firebase_auth.FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
@@ -13,11 +14,11 @@ class UserManager extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
-  UserManager({
-    firebase_auth.FirebaseAuth? auth,
-    FirebaseFirestore? firestore,
-  })  : auth = auth ?? firebase_auth.FirebaseAuth.instance,
-        firestore = firestore ?? FirebaseFirestore.instance {
+  bool get isLoggedin => user != null;
+
+  UserManager({firebase_auth.FirebaseAuth? auth, FirebaseFirestore? firestore})
+    : auth = auth ?? firebase_auth.FirebaseAuth.instance,
+      firestore = firestore ?? FirebaseFirestore.instance {
     _loadCurrentUser(null);
   }
 
@@ -28,13 +29,14 @@ class UserManager extends ChangeNotifier {
   }) async {
     loading = true;
     try {
-      final firebase_auth.UserCredential result = await auth.signInWithEmailAndPassword(
-        email: user.email,
-        password: user.password,
-      );
+      final firebase_auth.UserCredential result = await auth
+          .signInWithEmailAndPassword(
+            email: user.email,
+            password: user.password,
+          );
 
       await _loadCurrentUser(result.user);
-      print('Usuário logado: ${this.user?.name}');
+      debugPrint('Usuário logado: ${this.user?.name}');
       onSuccess(result.user!);
     } on firebase_auth.FirebaseAuthException catch (e) {
       onFail(getErrorString(e.code));
@@ -49,10 +51,11 @@ class UserManager extends ChangeNotifier {
   }) async {
     loading = true;
     try {
-      final firebase_auth.UserCredential result = await auth.createUserWithEmailAndPassword(
-        email: user.email,
-        password: user.password,
-      );
+      final firebase_auth.UserCredential result = await auth
+          .createUserWithEmailAndPassword(
+            email: user.email,
+            password: user.password,
+          );
 
       user.id = result.user!.uid;
 
@@ -60,12 +63,18 @@ class UserManager extends ChangeNotifier {
 
       await _loadCurrentUser(result.user);
 
-      print('Usuário cadastrado: ${this.user?.name}');
+      debugPrint('Usuário cadastrado: ${this.user?.name}');
       onSuccess();
     } on firebase_auth.FirebaseAuthException catch (e) {
       onFail(getErrorString(e.code));
     }
     loading = false;
+  }
+
+  void signOut() {
+    auth.signOut();
+    user = null;
+    notifyListeners();
   }
 
   set loading(bool value) {
@@ -77,17 +86,18 @@ class UserManager extends ChangeNotifier {
     final firebase_auth.User? currentUser = firebaseUser ?? auth.currentUser;
     if (currentUser != null) {
       try {
-        final DocumentSnapshot docUser = await firestore.collection('users').doc(currentUser.uid).get();
+        final DocumentSnapshot docUser =
+            await firestore.collection('users').doc(currentUser.uid).get();
         if (docUser.exists) {
           user = app_user.User.fromDocument(docUser);
-          print('Usuário carregado: ${user?.name}');
+          debugPrint('Usuário carregado: ${user?.name}');
         } else {
           user = null;
-          print('Documento do usuário não encontrado no Firestore.');
+          debugPrint('Documento do usuário não encontrado no Firestore.');
         }
       } catch (e) {
         user = null;
-        print('Erro ao carregar usuário: $e');
+        debugPrint('Erro ao carregar usuário: $e');
       }
       notifyListeners();
     }

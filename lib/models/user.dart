@@ -15,7 +15,7 @@ class User {
     required this.id,
   });
 
-  User.fromDocument(DocumentSnapshot document) {
+  User.fromDocument(dynamic document) {
     id = document.id;
     final data = document.data() as Map<String, dynamic>;
     name = data['name'] as String;

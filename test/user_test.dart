@@ -1,26 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loja_virtual_pro/models/user.dart';
 
-import 'package:flutter_test/flutter_test.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:loja_virtual_pro/models/user.dart';
-
-class FakeDocumentSnapshot implements DocumentSnapshot {
+class FakeDocumentSnapshot {
   final Map<String, dynamic> dataMap;
   final String docId;
 
   FakeDocumentSnapshot(this.docId, this.dataMap);
 
-  @override
   Map<String, dynamic>? data() => dataMap;
 
-  @override
   String get id => docId;
-
-  @override
-  // Implement other members with no-op or throw UnimplementedError if needed
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 void main() {

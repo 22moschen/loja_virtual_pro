@@ -29,6 +29,9 @@ class CustomDrawerHeader extends StatelessWidget {
           final userName = userManager.user?.name ?? '';
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
@@ -39,11 +42,25 @@ class CustomDrawerHeader extends StatelessWidget {
                 '$greeting, $userName',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight:  FontWeight.bold,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (userManager.isLoggedin) {
+                    userManager.signOut();
+                  } else {
+                    Navigator.of(context).pushNamed('/login');
+                  }
+                },
+                child: Text(
+                  userManager.isLoggedin ? 'Sair' : 'Entre ou cadastre-se >',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              )
+              ),
             ],
           );
         },

@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'test_setup.dart';
 
 class MockUserManager extends ChangeNotifier implements UserManager {
   bool _loading = false;
@@ -19,6 +21,15 @@ class MockUserManager extends ChangeNotifier implements UserManager {
   @override
   set user(app_user.User? value) {
     _user = value;
+  }
+
+  @override
+  bool get isLoggedin => _user != null;
+
+  @override
+  void signOut() {
+    _user = null;
+    notifyListeners();
   }
 
   bool signInCalled = false;
@@ -68,6 +79,12 @@ class MockUserManager extends ChangeNotifier implements UserManager {
 class MockFirebaseUser extends Mock implements firebase_auth.User {}
 
 void main() {
+  setupFirebaseMocks();
+
+  setUpAll(() async {
+    await Firebase.initializeApp();
+  });
+
   group('LoginScreen Widget Tests', () {
     late MockUserManager mockUserManager;
 

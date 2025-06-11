@@ -6,8 +6,16 @@ import 'package:loja_virtual_pro/common/custom_drawer/custom_drawer_header.dart'
 import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:loja_virtual_pro/models/user.dart' as app_user;
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mockito/mockito.dart';
+
+class MockUserManager extends Mock implements UserManager {}
 
 void main() {
+  setUpAll(() async {
+    await Firebase.initializeApp();
+  });
+
   group('BaseScreen Widget Tests', () {
     testWidgets('BaseScreen has PageView with 3 Scaffold children', (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -47,8 +55,8 @@ void main() {
 
   group('CustomDrawerHeader Widget Tests', () {
     testWidgets('CustomDrawerHeader shows greeting and user name', (WidgetTester tester) async {
-      final userManager = UserManager();
-      userManager.user = null;
+      final userManager = MockUserManager();
+      when(userManager.user).thenReturn(null);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -67,14 +75,14 @@ void main() {
     });
 
     testWidgets('CustomDrawerHeader shows user name when user is not null', (WidgetTester tester) async {
-      final userManager = UserManager();
-      userManager.user = app_user.User(
+      final userManager = MockUserManager();
+      when(userManager.user).thenReturn(app_user.User(
         id: '1',
         name: 'Test User',
         email: 'test@example.com',
         password: '',
         confirmPassword: '',
-      );
+      ));
 
       await tester.pumpWidget(
         MaterialApp(

@@ -107,8 +107,8 @@ class LoginScreen extends StatelessWidget {
                                         );
                                       },
                                       onSuccess: (user) {
-                                        // TODO: FECHAR TELA DE LOGIN
-                                        //Navigator.of(context).pop();
+                     
+                                        Navigator.of(context).pop();
                                       },
                                     );
                                   }

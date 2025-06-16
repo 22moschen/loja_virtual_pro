@@ -1,5 +1,6 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual_pro/models/product_manager.dart';
 import 'package:loja_virtual_pro/models/user_manager.dart';
 import 'package:loja_virtual_pro/screens/base/base_screen.dart';
 import 'package:loja_virtual_pro/screens/login/login_screen.dart';
@@ -19,34 +20,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserManager(),
-
-      child: MaterialApp(
-        title: 'Moschen Tecnologia',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: const Color.fromARGB(255, 4, 125, 141),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color.fromARGB(255, 4, 125, 144),
-            elevation: 0,
-          ),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserManager(),
+          lazy: false,
         ),
-        initialRoute: '/base',
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case '/login':
-              return MaterialPageRoute(builder: (_) => LoginScreen());
-            case '/signup':
-              return MaterialPageRoute(builder: (_) => SignUpScreen());
-            case '/base':
-            default:
-              return MaterialPageRoute(builder: (_) => BaseScreen());
-          }
+      Provider(
+        create: (_) => ProductManager(),
+        lazy: false,
+      ),
+      ],
+      child: MaterialApp(
+      title: 'Moschen Tecnologia',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color.fromARGB(255, 4, 125, 141),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 4, 125, 144),
+          elevation: 0,
+        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      initialRoute: '/base',
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/login':
+            return MaterialPageRoute(builder: (_) => LoginScreen());
+          case '/signup':
+            return MaterialPageRoute(builder: (_) => SignUpScreen());
+          case '/base':
+          default:
+            return MaterialPageRoute(builder: (_) => BaseScreen());
+        }
         },
       ),
+  
     );
   }
 }

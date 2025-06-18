@@ -22,7 +22,6 @@ class DrawerTile extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        // Aqui iria la acción que se realizaría al tocar el botón
         context.read<PageManager>().setPage(page);
       },
       child: SizedBox(

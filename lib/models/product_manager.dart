@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:loja_virtual_pro/models/product.dart';
 
 class ProductManager extends ChangeNotifier {
-  List<Product> _allProducts = [];
+  List<Product> allProducts = [];
 
   ProductManager() {
     // Carrega todos os produtos ao inicializar a classe
@@ -11,7 +11,7 @@ class ProductManager extends ChangeNotifier {
   }
 
   // Getter para acessar a lista de produtos
-  List<Product> get allProducts => List.unmodifiable(_allProducts);
+  //List<Product> get allProducts => List.unmodifiable(_allProducts);
 
   // Instância do FirebaseFirestore para acessar o Firestore
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -24,7 +24,7 @@ class ProductManager extends ChangeNotifier {
         await firestore.collection('products').get();
 
     // Converte os documentos para objetos Product e armazena na lista
-    _allProducts =
+    allProducts =
         snapProducts.docs.map((d) => Product.fromDocument(d)).toList();
 
     // Notifica os listeners sobre a atualização dos produtos
